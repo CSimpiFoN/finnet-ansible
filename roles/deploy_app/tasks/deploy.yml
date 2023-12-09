@@ -1,0 +1,8 @@
+---
+- name: Deploy Configurations
+  template:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+  with_items:
+    - {src: templates/compose.yaml.tmpl, dest: /root/test/compose.yaml}
+    - {src: templates/Dockerfile.tmpl, dest: /root/test/Dockerfile}

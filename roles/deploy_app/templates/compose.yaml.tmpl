@@ -6,4 +6,7 @@ services:
 {% for port in service.ports %}
       - "{% port.expose_port %}:{% port.app_listen_port %}"
 {% endfor %}
+    volumes:
+{% for volume in service.volumes %}
+      - {% volume.name %}:{% volume.path%}
 {% endfor %}
