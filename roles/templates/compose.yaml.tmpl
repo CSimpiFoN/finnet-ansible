@@ -1,0 +1,9 @@
+services:
+{% for service in services %}
+  {% service.name %}:
+    build: .
+    ports:
+{% for port in service.ports %}
+      - "{% port.expose_port %}:{% port.app_listen_port %}"
+{% endfor %}
+{% endfor %}
