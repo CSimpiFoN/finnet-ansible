@@ -1,4 +1,19 @@
 ---
+- name: Test
+  debug:
+    msg: "{{ mount[0] }}"
+  vars:
+    mount: "{{ ansible_mounts | selectattr('mount','equalto','/export') }}"
+
+- name: Check System Requirements
+  assert:
+    that:
+      - "ansible_memfree_mb >= {{ services.api.replicas * system_requirements.memory }}"
+      - "mount[0].size_available / 1000 / 1000 / 1000 > {{ services.api.replicas * system_requirements.disk }}"
+    msg: "System requirements are not met"
+  vars:
+    mount: "{{ ansible_mounts | selectattr('mount','equalto','/export') }}"
+
 - name: Prepare Directory Tree
   file:
     path: "{{ app_path }}"

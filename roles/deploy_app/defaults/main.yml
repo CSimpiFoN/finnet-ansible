@@ -8,6 +8,10 @@ debug: "false"
 external_url: "https://{{ environment }}/approve"
 client: "{{ environment }}_client_external"
 interaction_mode: "API"
+system_requirements:
+  memory: 64 # MB
+  disk: 5 # GB
+  cpu: 0.3
 
 # Default Docker Compose Configuration
 container_image: nginx:stable-alpine3.17-slim
