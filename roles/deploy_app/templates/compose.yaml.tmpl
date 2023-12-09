@@ -1,12 +1,26 @@
 services:
-{% for service in services %}
-  {% service.name %}:
+{% for key, value in services.items() %}
+  {{ key }}:
     build: .
     ports:
-{% for port in service.ports %}
-      - "{% port.expose_port %}:{% port.app_listen_port %}"
+{% for port in value.ports %}
+      - "{{ port.expose_port }}:{{ port.app_listen_port }}"
 {% endfor %}
     volumes:
-{% for volume in service.volumes %}
-      - {% volume.name %}:{% volume.path%}
+{% for key, value in value.volumes.items() %}
+      - {{ key }}:{{ value }}
+{% endfor %}
+    deploy:
+      # replicas: {{ value.replicas }}
+      resources:
+        reservations:
+          cpus: "{{ value.reservations.cpu }}"
+          memory: {{ value.reservations.memory }}
+{% endfor %}
+
+volumes:
+{% for key, value in services.items() %}
+{% for key, value in value.volumes.items() %}
+  {{ key }}:
+{% endfor %}
 {% endfor %}

@@ -1,8 +1,36 @@
 ---
+- name: Prepare Directory Tree
+  file:
+    path: "{{ app_path }}"
+    state: directory
+    recurse: yes
+
 - name: Deploy Configurations
   template:
     src: "{{ item.src }}"
     dest: "{{ item.dest }}"
   with_items:
-    - {src: templates/compose.yaml.tmpl, dest: /root/test/compose.yaml}
-    - {src: templates/Dockerfile.tmpl, dest: /root/test/Dockerfile}
+    - {src: templates/compose.yaml.tmpl, dest: "{{ app_path }}/compose.yaml"}
+    - {src: templates/Dockerfile.tmpl, dest: "{{ app_path }}/Dockerfile"}
+    - {src: templates/secret-keys-volume.tmpl, dest: "{{ app_path }}/secret-keys_volume"}
+  register: configuration
+
+- name: Start Application
+  shell:
+    cmd: docker compose up --detach --remove-orphans
+    chdir: "{{ app_path }}"
+  register: startup
+
+- name: Startup Logs
+  debug:
+    msg: "{{ startup.stderr_lines }}"
+
+- name: Check App
+  uri:
+    url: "http://localhost:{{ services.api.ports[0].expose_port }}"
+    return_content: true
+  register: test
+
+- name: Test Output
+  debug:
+    msg: "{{ test.content }}"

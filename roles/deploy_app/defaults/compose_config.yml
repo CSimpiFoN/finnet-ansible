@@ -1,9 +1,0 @@
----
-container_image: nginx:stable-alpine3.17-slim
-app_listen_port: 80
-expose_port: 8181
-services:
-  - name: api
-    ports:
-      - app_listen_port: 80
-        expose_port: 8181

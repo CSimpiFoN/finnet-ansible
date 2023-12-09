@@ -1,2 +1,3 @@
+environment: dev
 debug: "true"
 device_id: 2346456

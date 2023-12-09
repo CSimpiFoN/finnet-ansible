@@ -1,6 +1,0 @@
----
-tuning: "true"
-debug: "false"
-external_url: "https://dev/approve"
-client: "dev_client_external"
-interaction_mode: "API"

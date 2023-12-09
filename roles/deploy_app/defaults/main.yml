@@ -1,0 +1,26 @@
+---
+# System Configuration
+app_path: /root/test
+
+# Default Application Configuration
+tuning: "true"
+debug: "false"
+external_url: "https://{{ environment }}/approve"
+client: "{{ environment }}_client_external"
+interaction_mode: "API"
+
+# Default Docker Compose Configuration
+container_image: nginx:stable-alpine3.17-slim
+app_listen_port: 80
+expose_port: 8181
+services:
+  api:
+    ports:
+      - app_listen_port: 80
+        expose_port: 8181
+    volumes:
+      secret-keys-volume: "/secret-keys-volume"
+    replicas: 3
+    reservations:
+      cpu: 0.001
+      memory: 20M
