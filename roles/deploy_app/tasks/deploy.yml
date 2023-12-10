@@ -34,15 +34,10 @@
   shell:
     cmd: docker stack deploy api -c compose.yaml
     chdir: "{{ app_path }}"
-  register: startup
-
-- name: Startup Logs
-  debug:
-    msg: "{{ startup.stderr_lines }}"
 
 - name: Check App
   uri:
-    url: "http://localhost:{{ services.api.ports[0].expose_port }}"
+    url: "http://{{ host }}:{{ services.api.ports[0].expose_port }}"
     return_content: true
   register: test
 
