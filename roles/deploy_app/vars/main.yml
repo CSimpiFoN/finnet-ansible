@@ -22,5 +22,5 @@ services:
       secret-keys-volume: "/secret-keys-volume"
     replicas: 3
     reservations:
-      cpu: 0.001
-      memory: 20M
+      cpu: 0.3
+      memory: 1024M
