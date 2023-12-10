@@ -33,7 +33,6 @@
     dest: "{{ item.dest }}"
   with_items:
     - {src: templates/compose.yaml.tmpl, dest: "{{ app_path }}/compose.yaml"}
-    - {src: templates/secret-keys-volume.tmpl, dest: "{{ app_path }}/secret-keys_volume"}
   register: configuration
 
 - name: Start Application
