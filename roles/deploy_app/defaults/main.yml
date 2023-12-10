@@ -12,6 +12,7 @@ system_requirements:
   memory: 64 # MB
   disk: 5 # GB
   cpu: 0.3
+host: localhost
 
 # Default Docker Compose Configuration
 services:
