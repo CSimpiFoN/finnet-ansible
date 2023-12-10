@@ -29,12 +29,12 @@ services:
           memory: {{ value.reservations.memory }}
 {% endif %}
 {% endfor %}
-{% if value.volumes is defined %}
 
 volumes:
 {% for key, value in services.items() %}
+{% if value.volumes is defined %}
 {% for key, value in value.volumes.items() %}
   {{ key }}:
 {% endfor %}
-{% endfor %}
 {% endif %}
+{% endfor %}
