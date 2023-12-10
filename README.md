@@ -30,9 +30,9 @@
 - ansible_core 2.15.6 or higher on the Ansible host
 - Docker Swarm nodes on the Ansible targets (To have multiple replicas)
 
-### Playbook Function
+### Playbook Functions
 - Prepares the Swarm OS to run the services
-- Checks if the host has enough resources to run the services
+- Checks if the host has enough resources to run the services (Using service requirements settings and resource reservations)
 - Deploys the Docker Compose configuration file
 - Starts the service up
 - Checks the service availability
