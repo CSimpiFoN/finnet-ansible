@@ -4,6 +4,8 @@ app_path: /root/test
 storage_volume: /export
 
 # Default Application Configuration
+tuning: "true"
+debug: "false"
 system_requirements:
   memory: 32 # MB
   disk: 5 # GB
@@ -16,9 +18,10 @@ services:
     configuration:
       tuning: "{{ tuning }}"
       debug: "{{ debug }}"
-      external_url: "https://{{ environment }}/approve"
-      client: "{{ environment }}_client_external"
+      external_url: "https://{{ env }}/approve"
+      client: "{{ env }}_client_external"
       interaction_mode: "API"
+      device_id: "{{ device_id }}"
     container_image: nginx:stable-alpine3.17-slim
     ports:
       - app_listen_port: 80

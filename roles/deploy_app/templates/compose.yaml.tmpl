@@ -3,12 +3,9 @@ services:
   {{ key }}:
     image: {{ value.container_image }}
     environment:
-      - Tuning: {{ value.configuration.tuning }}
-      - Debug: {{ value.configuration.debug }}
-      - "External URL": "{{ value.configuration.external_url }}"
-      - Client: "{{ value.configuration.client }}"
-      - "Interaction Mode": "{{ value.configuration.interaction_mode }}"
-      - "Device ID": {{ value.configuration.device_id }}
+{% for key, value in value.configuration.items() %}
+      {{ key }}: "{{ value }}"
+{% endfor %}
     ports:
 {% for port in value.ports %}
       - "{{ port.expose_port }}:{{ port.app_listen_port }}"
