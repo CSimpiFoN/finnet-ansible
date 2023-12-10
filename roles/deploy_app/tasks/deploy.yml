@@ -1,10 +1,4 @@
 ---
-- name: Test
-  debug:
-    msg: "{{ mount[0] }}"
-  vars:
-    mount: "{{ ansible_mounts | selectattr('mount','equalto','/export') }}"
-
 - name: Check System Requirements
   assert:
     that:
@@ -12,7 +6,7 @@
       - "mount[0].size_available / 1000 / 1000 / 1000 > {{ services.api.replicas * system_requirements.disk }}"
     msg: "System requirements are not met"
   vars:
-    mount: "{{ ansible_mounts | selectattr('mount','equalto','/export') }}"
+    mount: "{{ ansible_mounts | selectattr('mount','equalto',storage_volume) }}"
 
 - name: Prepare Directory Tree
   file:
@@ -31,15 +25,20 @@
 
 - name: Start Application
   shell:
-    cmd: docker stack deploy api -c compose.yaml
+    cmd: "docker stack deploy {{ item.key }} -c compose.yaml"
     chdir: "{{ app_path }}"
+  # when: configuration.changed
+  with_items: "{{ services | dict2items}}"
 
 - name: Check App
   uri:
-    url: "http://{{ host }}:{{ services.api.ports[0].expose_port }}"
+    url: "http://{{ host }}:{{ item.value.ports[0].expose_port }}"
+    method: "GET"
     return_content: true
-  register: test
+  register: tests
+  with_items: "{{ services | dict2items }}"
 
 - name: Test Output
   debug:
-    msg: "{{ test.content }}"
+    msg: "{{ item.content }}"
+  with_items: "{{ tests.results }}"
