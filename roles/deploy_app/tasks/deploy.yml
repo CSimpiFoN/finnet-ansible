@@ -15,11 +15,12 @@
 - name: Check System Requirements
   assert:
     that:
-      - "ansible_memfree_mb >= {{ services.api.replicas * system_requirements.memory }}"
-      - "mount[0].size_available / 1000 / 1000 / 1000 > {{ services.api.replicas * system_requirements.disk }}"
+      - "ansible_memfree_mb >= {{ item.value.replicas * system_requirements.memory }}"
+      - "mount[0].size_available / 1000 / 1000 / 1000 > {{ item.value.replicas * item.value.requirements.disk }}"
     msg: "System requirements are not met"
   vars:
     mount: "{{ ansible_mounts | selectattr('mount','equalto',storage_volume) }}"
+  with_items: "{{ services | dict2items}}"
 
 - name: Prepare Directory Tree
   file:

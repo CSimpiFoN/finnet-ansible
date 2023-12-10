@@ -6,29 +6,4 @@ storage_volume: /export
 # Default Application Configuration
 tuning: "true"
 debug: "false"
-system_requirements:
-  memory: 32 # MB
-  disk: 5 # GB
-  cpu: 0.3
 host: localhost
-
-# Default Docker Compose Configuration
-services:
-  api:
-    configuration:
-      tuning: "{{ tuning }}"
-      debug: "{{ debug }}"
-      external_url: "https://{{ env }}/approve"
-      client: "{{ env }}_client_external"
-      interaction_mode: "API"
-      device_id: "{{ device_id }}"
-    container_image: nginx:stable-alpine3.17-slim
-    ports:
-      - app_listen_port: 80
-        expose_port: 8181
-    volumes:
-      secret-keys-volume: "/secret-keys-volume"
-    replicas: 3
-    reservations:
-      cpu: 0.001
-      memory: 20M
