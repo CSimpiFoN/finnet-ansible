@@ -14,17 +14,15 @@ system_requirements:
   cpu: 0.3
 
 # Default Docker Compose Configuration
-container_image: nginx:stable-alpine3.17-slim
-app_listen_port: 80
-expose_port: 8181
 services:
+  container_image: nginx:stable-alpine3.17-slim
   api:
     ports:
       - app_listen_port: 80
         expose_port: 8181
     volumes:
       secret-keys-volume: "/secret-keys-volume"
-    replicas: 3
+    # replicas: 3
     reservations:
       cpu: 0.001
       memory: 20M
