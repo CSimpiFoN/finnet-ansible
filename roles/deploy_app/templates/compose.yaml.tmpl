@@ -11,7 +11,7 @@ services:
       - {{ key }}:{{ value }}
 {% endfor %}
     deploy:
-      # replicas: {{ value.replicas }}
+      replicas: {{ value.replicas }}
       resources:
         reservations:
           cpus: "{{ value.reservations.cpu }}"

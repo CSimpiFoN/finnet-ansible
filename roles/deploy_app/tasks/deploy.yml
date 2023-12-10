@@ -32,7 +32,7 @@
 
 - name: Start Application
   shell:
-    cmd: docker compose up --detach --remove-orphans
+    cmd: docker stack deploy api -c compose.yaml
     chdir: "{{ app_path }}"
   register: startup
 
