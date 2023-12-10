@@ -15,14 +15,14 @@ system_requirements:
 
 # Default Docker Compose Configuration
 services:
-  container_image: nginx:stable-alpine3.17-slim
   api:
+    container_image: nginx:stable-alpine3.17-slim
     ports:
       - app_listen_port: 80
         expose_port: 8181
     volumes:
       secret-keys-volume: "/secret-keys-volume"
-    # replicas: 3
+    replicas: 3
     reservations:
       cpu: 0.001
       memory: 20M

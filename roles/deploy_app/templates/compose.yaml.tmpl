@@ -1,10 +1,10 @@
 services:
 {% for key, value in services.items() %}
   {{ key }}:
-    image: {{ service.container_image }}
+    image: {{ value.container_image }}
     ports:
 {% for port in value.ports %}
-      - "{{ service.port.expose_port }}:{{ service.port.app_listen_port }}"
+      - "{{ port.expose_port }}:{{ port.app_listen_port }}"
 {% endfor %}
     volumes:
 {% for key, value in value.volumes.items() %}
