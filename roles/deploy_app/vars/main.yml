@@ -1,0 +1,24 @@
+# Service Configurations
+services:
+  api:
+    requirements:
+      memory: 20 # MB
+      disk: 5 # GB
+      cpu: 0.001
+    configuration:
+      tuning: "{{ tuning }}"
+      debug: "{{ debug }}"
+      external_url: "https://{{ env }}/approve"
+      client: "{{ env }}_client_external"
+      interaction_mode: "API"
+      device_id: "{{ device_id }}"
+    container_image: nginx:stable-alpine3.17-slim
+    ports:
+      - app_listen_port: 80
+        expose_port: 8181
+    volumes:
+      secret-keys-volume: "/secret-keys-volume"
+    replicas: 3
+    reservations:
+      cpu: "{{ services.api.requirements.cpu}}"
+      memory: "{{ services.api.requirements.memory}}M"
