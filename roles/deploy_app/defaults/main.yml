@@ -3,7 +3,4 @@
 app_path: /root/test
 storage_volume: /export
 
-# Default Application Configuration
-tuning: "true"
-debug: "false"
-host: localhost
+test_host: localhost

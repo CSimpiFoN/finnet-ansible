@@ -1,10 +1,12 @@
+# Default Application Configuration
+tuning: "true"
+debug: "false"
+
 # Service Configurations
 services:
   api:
     requirements:
-      memory: 20 # MB
       disk: 5 # GB
-      cpu: 0.001
     configuration:
       tuning: "{{ tuning }}"
       debug: "{{ debug }}"
@@ -20,5 +22,5 @@ services:
       secret-keys-volume: "/secret-keys-volume"
     replicas: 3
     reservations:
-      cpu: "{{ services.api.requirements.cpu}}"
-      memory: "{{ services.api.requirements.memory}}M"
+      cpu: 0.001
+      memory: 20M
